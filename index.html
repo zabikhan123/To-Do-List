@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO LIST APP</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="container">
+        <div class="todo-title">
+        <h1>TO DO LIST APP</h1>
+        </div>
+        <div class="input-section">
+             <input type="text" id="todoinput" placeholder="Add a new task...">
+             <button class="add-btn" onclick="addtodo()">
+                <i class='bx bx-list-plus'></i> Add
+             </button>
+             <!-- <ul id="taskList"></ul> -->
+        </div>
+       <div class="sort-section">
+            <button class="sort-btn" onclick="togglesort()">
+                Sort by  oldest <i class='bx bx-sort' ></i>
+            </button>
+       </div>
+        
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
