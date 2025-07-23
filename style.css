@@ -1,21 +1,118 @@
-*{
+ @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap'); 
+
+
+  *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family:  'outfit','Arial', sans-serif;
 }
 body{
     background-color: #0f0f0f;
     color: #fff;
+    padding: 40px 20px;
 }
-.container{
-    width: 100%;
-    height: 100vh;
+ .container{
+    margin: 0 auto;
+    background: #e8f3f9;
+    max-width: 600px;
     display: flex;
-    justify-content:center;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5 10px rgba(0, 0, 0, 0.3);
+}
+    /*
+.todo-title h1{
+  color:  #1a1a1a;
+  text-align: center;
+}
+.input-section{
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background: #fff;
+}
+.todo-input{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+button{
+    display: flex;
     align-items: center;
+    gap: 10px;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background .3s;
 }
-.container h1{
-    display: block;
-    font-size: 2.5rem;
+.add-btn{
+    background: #4caf50;
+    margin-right: 4px;
+    padding: 8px 20px;
+    border-radius: 10px;
 }
+.add-btn:hover{
+    background: #45a049;
+}
+.sort-section{
+    display: flex;
+    justify-content: right;
+}
+.sort-button{
+    background: #2196f3;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    color: #000;
+    font-size:14px;
+}
+.sort-button:hover{
+    background: #eee;
+}
+.todo-section{
+    border:1px solid #e0e0e0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.section-header{
+    background: #f8f9fa;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+.section-header-row{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.section-header-row h2{
+    font-size:18px;
+    color: #333;
+}
+.section-header-row .count{
+    background: #e0e0e0;
+    padding: 2px 8px:
+    border-radius: 12px;
+    font-size: 14px;
+}
+.section-content{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease-out;
+}
+.section-content.expanded{
+    overflow: auto;
+    max-height: 1000px;
+} */
