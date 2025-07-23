@@ -1,89 +1,111 @@
- @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
-
-  *{
+/* Reset & Base Styles */
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family:  'outfit','Arial', sans-serif;
+    font-family: 'Outfit', 'Arial', sans-serif;
 }
-body{
+
+body {
     background-color: #0f0f0f;
     color: #fff;
     padding: 40px 20px;
+    min-height: 100vh;
 }
- .container{
-    margin: 0 auto;
+
+/* Container */
+.container {
+    /* margin-top: 50%; */
+    margin: 6% auto;
     background: #e8f3f9;
     max-width: 600px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px;
+    padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 5 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
- 
-.todo-title h1{
-  color:  #1a1a1a;
-  text-align: center;
+
+/* Title */
+.todo-title h1 {
+    color: #1a1a1a;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
-.input-section{
+
+/* Input Section */
+.input-section {
     display: flex;
+    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 10px;
-    text-align: center;
     background: #fff;
+    overflow: hidden;
 }
-.todo-input{
+
+#todo-input {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     border: none;
-    border-radius: 10px;
     outline: none;
 }
-button{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+
+.add-btn {
+    background: #4caf50;
     color: #fff;
     border: none;
+    padding: 0 20px;
     font-size: 16px;
     cursor: pointer;
-    transition: background .3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
 }
-.add-btn{
-    background: #4caf50;
-    margin-right: 4px;
-    padding: 8px 20px;
-    border-radius: 10px;
-}
-.add-btn:hover{
+
+.add-btn:hover {
     background: #45a049;
 }
-.sort-section{
+
+/* Sort Button */
+.sort-section {
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
 }
-.sort-button{
+
+.sort-btn {
     background: #2196f3;
     padding: 8px 16px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 10px;
-    color: #000;
-    font-size:14px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s;
 }
-.sort-button:hover{
-    background: #eee;
+
+.sort-btn:hover {
+    background: #4d95cf;
+    transform: translateY(1px ease-in-out);
 }
-.todo-section{
-    border:1px solid #e0e0e0;
+
+/* Todo Sections */
+.todo-section {
+    border: 1px solid #e0e0e0;
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
 }
-.section-header{
+
+.section-header {
     background: #f8f9fa;
     padding: 12px;
     display: flex;
@@ -91,47 +113,58 @@ button{
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
+    user-select: none;
 }
-.section-header-row{
+
+.section-header-row {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.section-header-row h2{
-    font-size:18px;
+
+.section-header h2 {
+    font-size: 18px;
     color: #333;
 }
-.section-header-row .count{
+
+.count {
     background: #e0e0e0;
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 14px;
+    color: #555;
 }
-.chevron{
-    transition: transform .3s ease;
+
+.chevron {
+    transition: transform 0.3s ease;
 }
-.section-header.active .chevron{
+
+.section-header.active .chevron {
     transform: rotate(180deg);
 }
-.section-content{
+
+.section-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height .3s ease-out;
+    transition: max-height 0.3s ease-out;
 }
-.section-content.expanded{
-    overflow: auto;
+
+.section-content.expanded {
     max-height: 1000px;
-} 
-.todo-item{
+}
+
+/* Todo Items */
+.todo-item {
     display: flex;
     align-items: center;
-    padding:  12px;
+    padding: 12px;
     background-color: #f8f9fa;
     margin: 8px;
     border-radius: 8px;
-    animation: slidein 0.3s ease;
+    animation: slideIn 0.3s ease;
 }
-@keyframes slidein {
+
+@keyframes slideIn {
     from {
         transform: translateY(-10px);
         opacity: 0;
@@ -141,45 +174,57 @@ button{
         opacity: 1;
     }
 }
-.todo-text{
+
+.todo-text {
     flex: 1;
-    margin-right: 10px;
+    margin: 0 10px;
+    color: #333;
 }
 
-.todo-text.completed .todo-text{
+.todo-item.completed .todo-text {
     text-decoration: line-through;
     color: #666;
 }
-.delete-btn{
+
+.delete-btn {
     background: none;
     color: #8a2727;
-    padding: 12px;
-    border-radius: 100%;
-    
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
 }
-.delete-btn:hover{
+
+.delete-btn:hover {
     background-color: #eee;
 }
-.checkbox{
+
+/* Custom Checkbox */
+.checkbox {
     appearance: none;
     background-color: transparent;
     width: 20px;
     height: 20px;
-    margin-right: 10px;
     border: 1px solid #ccc;
-    border-radius: 100%;
+    border-radius: 50%;
     display: grid;
     place-items: center;
     cursor: pointer;
+    transition: background 0.2s;
 }
-.checkbox::before{
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 -2 24 24' style='fill: rgba(255, 255, 255, 1);transform: ;msFilter:;'%3E%3Cpath d='m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z'%3E%3C/path%3E%3C/svg%3E");;
-   transform: scale(0);
+
+.checkbox::before {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 -2 24 24' style='fill: rgba(255, 255, 255, 1);transform: ;msFilter:;'%3E%3Cpath d='m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z'%3E%3C/path%3E%3C/svg%3E");
+    transform: scale(0);
+    transition: transform 0.2s;
 }
-.checkbox:checked{
+
+.checkbox:checked {
     background: #8d51e8;
     border-color: #8d51e8;
 }
-.checkbox:checked::before{
+
+.checkbox:checked::before {
     transform: scale(1);
 }
