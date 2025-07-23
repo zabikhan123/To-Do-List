@@ -107,6 +107,12 @@ button{
     border-radius: 12px;
     font-size: 14px;
 }
+.chevron{
+    transition: transform .3s ease;
+}
+.section-header.active .chevron{
+    transform: rotate(180deg);
+}
 .section-content{
     max-height: 0;
     overflow: hidden;
@@ -116,3 +122,64 @@ button{
     overflow: auto;
     max-height: 1000px;
 } 
+.todo-item{
+    display: flex;
+    align-items: center;
+    padding:  12px;
+    background-color: #f8f9fa;
+    margin: 8px;
+    border-radius: 8px;
+    animation: slidein 0.3s ease;
+}
+@keyframes slidein {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.todo-text{
+    flex: 1;
+    margin-right: 10px;
+}
+
+.todo-text.completed .todo-text{
+    text-decoration: line-through;
+    color: #666;
+}
+.delete-btn{
+    background: none;
+    color: #8a2727;
+    padding: 12px;
+    border-radius: 100%;
+    
+}
+.delete-btn:hover{
+    background-color: #eee;
+}
+.checkbox{
+    appearance: none;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 100%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+.checkbox::before{
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 -2 24 24' style='fill: rgba(255, 255, 255, 1);transform: ;msFilter:;'%3E%3Cpath d='m10 15.586-3.293-3.293-1.414 1.414L10 18.414l9.707-9.707-1.414-1.414z'%3E%3C/path%3E%3C/svg%3E");;
+   transform: scale(0);
+}
+.checkbox:checked{
+    background: #8d51e8;
+    border-color: #8d51e8;
+}
+.checkbox:checked::before{
+    transform: scale(1);
+}
