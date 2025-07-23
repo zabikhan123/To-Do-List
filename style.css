@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 /* Reset & Base Styles */
 * {
@@ -17,7 +17,6 @@ body {
 
 /* Container */
 .container {
-    /* margin-top: 50%; */
     margin: 6% auto;
     background: #e8f3f9;
     max-width: 600px;
