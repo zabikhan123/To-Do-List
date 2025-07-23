@@ -61,7 +61,7 @@ button{
 }
 .add-btn:hover{
     background: #45a049;
-}/*
+}
 .sort-section{
     display: flex;
     justify-content: right;
@@ -76,7 +76,7 @@ button{
 }
 .sort-button:hover{
     background: #eee;
-}
+}/*
 .todo-section{
     border:1px solid #e0e0e0;
     background: #fff;
