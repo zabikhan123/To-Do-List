@@ -34,7 +34,7 @@ body{
     border-radius: 10px;
     text-align: center;
     background: #fff;
-}/*
+}
 .todo-input{
     width: 100%;
     padding: 10px;
@@ -61,7 +61,7 @@ button{
 }
 .add-btn:hover{
     background: #45a049;
-}
+}/*
 .sort-section{
     display: flex;
     justify-content: right;
