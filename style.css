@@ -23,7 +23,7 @@ body{
     border-radius: 12px;
     box-shadow: 0 5 10px rgba(0, 0, 0, 0.3);
 }
-    /*
+ 
 .todo-title h1{
   color:  #1a1a1a;
   text-align: center;
@@ -34,7 +34,7 @@ body{
     border-radius: 10px;
     text-align: center;
     background: #fff;
-}
+}/*
 .todo-input{
     width: 100%;
     padding: 10px;
