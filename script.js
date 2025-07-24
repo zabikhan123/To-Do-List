@@ -19,3 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTodos();
     updateItemsLeft();
     setupDragAndDrop();
+
+        // added event listeners
+        
+    addBtn.addEventListener('click', addTodo);
+    todoInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTodo();
+    });
