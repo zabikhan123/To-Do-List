@@ -7,4 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const itemsLeft = document.getElementById('items-left');
     const clearCompleted = document.getElementById('clear-completed');
     const themeToggle = document.querySelector('.theme-toggle');
-})
+});
+    // Load todos from localStorage
+    
+    let todos = JSON.parse(localStorage.getItem('todos')) || [];
+    let currentFilter = 'all';
+    let isDarkTheme = false;
