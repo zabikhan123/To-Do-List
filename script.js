@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
       // show or hide the workspace based on the theme
-      
+
         function renderTodos() {
         todoList.innerHTML = '';
 
@@ -141,4 +141,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             todoList.appendChild(todoItem);
         });
+    }
+
+    // Function to save todos to localStorage
+    
+        function saveTodos() {
+        localStorage.setItem('todos', JSON.stringify(todos));
     }
