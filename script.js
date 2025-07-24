@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearCompleted.addEventListener('click', clearCompletedTodos);
     themeToggle.addEventListener('click', toggleTheme);
 
-    
+
         // added new todo function
 
         function addTodo() {
@@ -61,4 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTodos();
         todoInput.value = '';
         todoInput.focus();
+    }
+    // Function to save todos to localStorage
+    
+        function toggleComplete(id) {
+        todos = todos.map(todo => 
+            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+        );
+        saveTodos();
+        renderTodos();
+        updateItemsLeft();
     }
