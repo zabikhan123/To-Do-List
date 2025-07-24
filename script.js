@@ -82,9 +82,15 @@ document.addEventListener('DOMContentLoaded', () => {
         updateItemsLeft();
     }
         // clear completed todos
-        
+
         function clearCompletedTodos() {
         todos = todos.filter(todo => !todo.completed);
         saveTodos();
         renderTodos();
+    }
+        // update the items left
+        
+        function updateItemsLeft() {
+        const count = todos.filter(todo => !todo.completed).length;
+        itemsLeft.textContent = `${count} ${count === 1 ? 'item' : 'items'} left`;
     }
