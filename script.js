@@ -1,52 +1,37 @@
+// 📌 1. تنظیمات اولیه - وقتی صفحه کاملاً بارگذاری شد
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize the application
-    const todoInput = document.getElementById('todo-input');
-    const addBtn = document.getElementById('add-btn');
-    const todoList = document.querySelector('.todo-list');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const itemsLeft = document.getElementById('items-left');
-    const clearCompleted = document.getElementById('clear-completed');
-    const themeToggle = document.querySelector('.theme-toggle');
-});
-    // Load todos from localStorage
+    
+    // 🔍 2. انتخاب عناصر مهم از صفحه
+    const elements = {
+        input: document.getElementById('todo-input'),
+        addBtn: document.getElementById('add-btn'),
+        list: document.querySelector('.todo-list'),
+        filters: document.querySelectorAll('.filter-btn'),
+        counter: document.getElementById('items-left'),
+        clearBtn: document.getElementById('clear-completed'),
+        themeBtn: document.querySelector('.theme-toggle')
+    };
 
-    let todos = JSON.parse(localStorage.getItem('todos')) || [];
-    let currentFilter = 'all';
-    let isDarkTheme = false;
+    // 💾 3. وضعیت برنامه
+    const state = {
+        todos: JSON.parse(localStorage.getItem('todos')) || [],
+        filter: 'all',
+        darkMode: false
+    };
 
-    // Function to save todos to localStorage
+    // 🚀 4. راه‌اندازی اولیه برنامه
+    function init() {
+        renderTodos();
+        updateCounter();
+        setupDragDrop();
+        loadTheme();
+    }
 
-    renderTodos();
-    updateItemsLeft();
-    setupDragAndDrop();
+    // ✨ 5. توابع اصلی برنامه
 
-        // added event listeners
-
-    addBtn.addEventListener('click', addTodo);
-    todoInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') addTodo();
-    });
-
-        // filter todos based on the selected filter
-
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentFilter = btn.dataset.filter;
-            renderTodos();
-        });
-    });
-       // update the count of items left
-
-        clearCompleted.addEventListener('click', clearCompletedTodos);
-    themeToggle.addEventListener('click', toggleTheme);
-
-
-        // added new todo function
-
-        function addTodo() {
-        const text = todoInput.value.trim();
+    // افزودن کار جدید
+    function addTodo() {
+        const text = elements.input.value.trim();
         if (!text) return;
 
         const newTodo = {
@@ -56,165 +41,200 @@ document.addEventListener('DOMContentLoaded', () => {
             createdAt: new Date()
         };
 
-        todos.push(newTodo);
-        saveTodos();
-        renderTodos();
-        todoInput.value = '';
-        todoInput.focus();
+        state.todos.push(newTodo);
+        saveAndUpdate();
+        elements.input.value = '';
+        elements.input.focus();
     }
-    // Function to save todos to localStorage
 
-        function toggleComplete(id) {
-        todos = todos.map(todo => 
-            todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    // تغییر وضعیت انجام کار
+    function toggleComplete(id) {
+        state.todos = state.todos.map(todo => 
+            todo.id === id ? {...todo, completed: !todo.completed} : todo
         );
-        saveTodos();
-        renderTodos();
-        updateItemsLeft();
-    } 
-
-        // function to delete a todo
-
-        function deleteTodo(id) {
-        todos = todos.filter(todo => todo.id !== id);
-        saveTodos();
-        renderTodos();
-        updateItemsLeft();
-    }
-        // clear completed todos
-
-        function clearCompletedTodos() {
-        todos = todos.filter(todo => !todo.completed);
-        saveTodos();
-        renderTodos();
-    }
-        // update the items left
-
-        function updateItemsLeft() {
-        const count = todos.filter(todo => !todo.completed).length;
-        itemsLeft.textContent = `${count} ${count === 1 ? 'item' : 'items'} left`;
+        saveAndUpdate();
     }
 
-      // show or hide the workspace based on the theme
+    // حذف کار
+    function deleteTodo(id) {
+        state.todos = state.todos.filter(todo => todo.id !== id);
+        saveAndUpdate();
+    }
 
-        function renderTodos() {
-        todoList.innerHTML = '';
+    // پاک کردن کارهای انجام شده
+    function clearCompleted() {
+        state.todos = state.todos.filter(todo => !todo.completed);
+        saveAndUpdate();
+    }
 
-        let filteredTodos = [...todos];
-        
-        if (currentFilter === 'active') {
-            filteredTodos = todos.filter(todo => !todo.completed);
-        } else if (currentFilter === 'completed') {
-            filteredTodos = todos.filter(todo => todo.completed);
-        }
+    // 🔄 6. توابع کمکی
 
-        if (filteredTodos.length === 0) {
-            const emptyState = document.createElement('div');
-            emptyState.className = 'empty-state';
-            emptyState.textContent = currentFilter === 'all' 
-                ? 'No tasks yet!' 
-                : currentFilter === 'active' 
-                    ? 'No active tasks!' 
-                    : 'No completed tasks!';
-            todoList.appendChild(emptyState);
+    // ذخیره و به‌روزرسانی
+    function saveAndUpdate() {
+        saveToLocalStorage();
+        renderTodos();
+        updateCounter();
+    }
+
+    // ذخیره در localStorage
+    function saveToLocalStorage() {
+        localStorage.setItem('todos', JSON.stringify(state.todos));
+    }
+
+    // نمایش کارها
+    function renderTodos() {
+        elements.list.innerHTML = '';
+
+        // فیلتر کردن بر اساس وضعیت
+        const filtered = state.todos.filter(todo => {
+            if (state.filter === 'active') return !todo.completed;
+            if (state.filter === 'completed') return todo.completed;
+            return true;
+        });
+
+        // اگر لیست خالی است
+        if (filtered.length === 0) {
+            const emptyMsg = document.createElement('div');
+            emptyMsg.className = 'empty-msg';
+            emptyMsg.textContent = getEmptyMessage();
+            elements.list.appendChild(emptyMsg);
             return;
         }
 
-        filteredTodos.forEach(todo => {
-            const todoItem = document.createElement('div');
-            todoItem.className = `todo-item ${todo.completed ? 'completed' : ''}`;
-            todoItem.dataset.id = todo.id;
-            todoItem.draggable = true;
+        // ایجاد عناصر کارها
+        filtered.forEach(todo => {
+            const item = document.createElement('div');
+            item.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+            item.dataset.id = todo.id;
+            item.draggable = true;
             
-            todoItem.innerHTML = `
-                <input 
-                    type="checkbox" 
-                    class="todo-checkbox" 
-                    ${todo.completed ? 'checked' : ''}
-                    onclick="app.toggleComplete(${todo.id})"
-                >
+            item.innerHTML = `
+                <input type="checkbox" 
+                       class="todo-checkbox" 
+                       ${todo.completed ? 'checked' : ''}
+                       onchange="app.toggleComplete(${todo.id})">
                 <span class="todo-text">${todo.text}</span>
                 <button class="delete-btn" onclick="app.deleteTodo(${todo.id})">
                     <i class="fas fa-trash"></i>
                 </button>
             `;
             
-            todoList.appendChild(todoItem);
+            elements.list.appendChild(item);
         });
     }
 
-    // Function to save todos to localStorage
-
-        function saveTodos() {
-        localStorage.setItem('todos', JSON.stringify(todos));
-    }
-     // Function to setup drag and drop functionality
-
-       function toggleTheme() {
-        isDarkTheme = !isDarkTheme;
-        document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
-        themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+    // پیام لیست خالی
+    function getEmptyMessage() {
+        return {
+            'all': '',
+            'active':'ongoing tasks',
+            'completed': 'completed tasks',
+        }[state.filter];
     }
 
-    // close the function to setup drag and drop functionality
+    // به‌روزرسانی شمارنده
+    function updateCounter() {
+        const count = state.todos.filter(t => !t.completed).length;
+        elements.counter.textContent = `${count} کار باقیمانده`;
+    }
 
-        function setupDragAndDrop() {
+    // تغییر تم
+    function toggleTheme() {
+        state.darkMode = !state.darkMode;
+        document.documentElement.setAttribute('data-theme', 
+            state.darkMode ? 'dark' : 'light');
+        elements.themeBtn.innerHTML = state.darkMode 
+            ? '<i class="fas fa-sun"></i>' 
+            : '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', state.darkMode ? 'dark' : 'light');
+    }
+
+    // بارگذاری تم از حافظه
+    function loadTheme() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        state.darkMode = savedTheme === 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        elements.themeBtn.innerHTML = state.darkMode 
+            ? '<i class="fas fa-sun"></i>' 
+            : '<i class="fas fa-moon"></i>';
+    }
+
+    // 🖱️ 7. مدیریت رویدادها
+
+    // رویداد کلیک برای افزودن کار
+    elements.addBtn.addEventListener('click', addTodo);
+    
+    // رویداد کیبورد برای افزودن کار
+    elements.input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') addTodo();
+    });
+
+    // رویدادهای فیلترها
+    elements.filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+            elements.filters.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.filter = btn.dataset.filter;
+            renderTodos();
+        });
+    });
+
+    // رویداد پاک کردن کارهای انجام شده
+    elements.clearBtn.addEventListener('click', clearCompleted);
+
+    // رویداد تغییر تم
+    elements.themeBtn.addEventListener('click', toggleTheme);
+
+    // 🧩 8. قابلیت کشیدن و رها کردن
+    function setupDragDrop() {
         let draggedItem = null;
 
-        todoList.addEventListener('dragstart', (e) => {
+        elements.list.addEventListener('dragstart', (e) => {
             if (e.target.classList.contains('todo-item')) {
                 draggedItem = e.target;
-                setTimeout(() => {
-                    e.target.classList.add('dragging');
-                }, 0);
+                setTimeout(() => e.target.classList.add('dragging'), 0);
             }
         });
 
-        todoList.addEventListener('dragend', (e) => {
+        elements.list.addEventListener('dragend', (e) => {
             if (e.target.classList.contains('todo-item')) {
                 e.target.classList.remove('dragging');
             }
         });
 
-        todoList.addEventListener('dragover', (e) => {
+        elements.list.addEventListener('dragover', (e) => {
             e.preventDefault();
             const afterElement = getDragAfterElement(e.clientY);
             const currentItem = document.querySelector('.dragging');
             
-            if (!currentItem || !afterElement) {
-                todoList.appendChild(currentItem);
-            } else {
-                todoList.insertBefore(currentItem, afterElement);
+            if (currentItem) {
+                elements.list.insertBefore(
+                    currentItem, 
+                    afterElement || null
+                );
             }
         });
 
         function getDragAfterElement(y) {
-            const draggableElements = [...document.querySelectorAll('.todo-item:not(.dragging)')];
+            const items = [...document.querySelectorAll('.todo-item:not(.dragging)')];
             
-            return draggableElements.reduce((closest, child) => {
+            return items.reduce((closest, child) => {
                 const box = child.getBoundingClientRect();
                 const offset = y - box.top - box.height / 2;
                 
-                if (offset < 0 && offset > closest.offset) {
-                    return { offset: offset, element: child };
-                } else {
-                    return closest;
-                }
+                return offset < 0 && offset > closest.offset 
+                    ? { offset, element: child } 
+                    : closest;
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
     }
 
-
-
-        // for running the application
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    isDarkTheme = savedTheme === 'dark';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    
+    // 🌐 9. در دسترس قرار دادن توابع برای HTML
     window.app = {
         toggleComplete,
         deleteTodo
     };
+
+    // 🏁 10. شروع برنامه
+    init();
+});
