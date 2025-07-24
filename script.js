@@ -63,11 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
         todoInput.focus();
     }
     // Function to save todos to localStorage
-    
+
         function toggleComplete(id) {
         todos = todos.map(todo => 
             todo.id === id ? { ...todo, completed: !todo.completed } : todo
         );
+        saveTodos();
+        renderTodos();
+        updateItemsLeft();
+    } 
+        // function to delete a todo
+
+        function deleteTodo(id) {
+        todos = todos.filter(todo => todo.id !== id);
         saveTodos();
         renderTodos();
         updateItemsLeft();
