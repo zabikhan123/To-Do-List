@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
         // filter todos based on the selected filter
-        
+
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
@@ -37,3 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderTodos();
         });
     });
+       // update the count of items left
+       
+        clearCompleted.addEventListener('click', clearCompletedTodos);
+    themeToggle.addEventListener('click', toggleTheme);
