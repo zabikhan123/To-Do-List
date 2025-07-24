@@ -204,3 +204,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
     }
+
+
+
+        // for running the application
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    isDarkTheme = savedTheme === 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    
+    window.app = {
+        toggleComplete,
+        deleteTodo
+    };
