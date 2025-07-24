@@ -89,8 +89,56 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTodos();
     }
         // update the items left
-        
+
         function updateItemsLeft() {
         const count = todos.filter(todo => !todo.completed).length;
         itemsLeft.textContent = `${count} ${count === 1 ? 'item' : 'items'} left`;
+    }
+
+      // show or hide the workspace based on the theme
+      
+        function renderTodos() {
+        todoList.innerHTML = '';
+
+        let filteredTodos = [...todos];
+        
+        if (currentFilter === 'active') {
+            filteredTodos = todos.filter(todo => !todo.completed);
+        } else if (currentFilter === 'completed') {
+            filteredTodos = todos.filter(todo => todo.completed);
+        }
+
+        if (filteredTodos.length === 0) {
+            const emptyState = document.createElement('div');
+            emptyState.className = 'empty-state';
+            emptyState.textContent = currentFilter === 'all' 
+                ? 'No tasks yet!' 
+                : currentFilter === 'active' 
+                    ? 'No active tasks!' 
+                    : 'No completed tasks!';
+            todoList.appendChild(emptyState);
+            return;
+        }
+
+        filteredTodos.forEach(todo => {
+            const todoItem = document.createElement('div');
+            todoItem.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+            todoItem.dataset.id = todo.id;
+            todoItem.draggable = true;
+            
+            todoItem.innerHTML = `
+                <input 
+                    type="checkbox" 
+                    class="todo-checkbox" 
+                    ${todo.completed ? 'checked' : ''}
+                    onclick="app.toggleComplete(${todo.id})"
+                >
+                <span class="todo-text">${todo.text}</span>
+                <button class="delete-btn" onclick="app.deleteTodo(${todo.id})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            
+            todoList.appendChild(todoItem);
+        });
     }
