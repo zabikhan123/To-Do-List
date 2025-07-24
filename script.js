@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTodos();
         updateItemsLeft();
     } 
+
         // function to delete a todo
 
         function deleteTodo(id) {
@@ -79,4 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
         saveTodos();
         renderTodos();
         updateItemsLeft();
+    }
+        // clear completed todos
+        
+        function clearCompletedTodos() {
+        todos = todos.filter(todo => !todo.completed);
+        saveTodos();
+        renderTodos();
     }
