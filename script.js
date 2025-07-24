@@ -144,7 +144,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Function to save todos to localStorage
-    
+
         function saveTodos() {
         localStorage.setItem('todos', JSON.stringify(todos));
+    }
+     // Function to setup drag and drop functionality
+     
+       function toggleTheme() {
+        isDarkTheme = !isDarkTheme;
+        document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
+        themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
     }
