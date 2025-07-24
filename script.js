@@ -21,8 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDragAndDrop();
 
         // added event listeners
-        
+
     addBtn.addEventListener('click', addTodo);
     todoInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') addTodo();
+    });
+
+        // filter todos based on the selected filter
+        
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.dataset.filter;
+            renderTodos();
+        });
     });
