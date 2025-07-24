@@ -9,7 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.querySelector('.theme-toggle');
 });
     // Load todos from localStorage
-    
+
     let todos = JSON.parse(localStorage.getItem('todos')) || [];
     let currentFilter = 'all';
     let isDarkTheme = false;
+
+    // Function to save todos to localStorage
+
+    renderTodos();
+    updateItemsLeft();
+    setupDragAndDrop();
