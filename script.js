@@ -38,6 +38,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
        // update the count of items left
-       
+
         clearCompleted.addEventListener('click', clearCompletedTodos);
     themeToggle.addEventListener('click', toggleTheme);
+
+    
+        // added new todo function
+
+        function addTodo() {
+        const text = todoInput.value.trim();
+        if (!text) return;
+
+        const newTodo = {
+            id: Date.now(),
+            text,
+            completed: false,
+            createdAt: new Date()
+        };
+
+        todos.push(newTodo);
+        saveTodos();
+        renderTodos();
+        todoInput.value = '';
+        todoInput.focus();
+    }
