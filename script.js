@@ -149,10 +149,58 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('todos', JSON.stringify(todos));
     }
      // Function to setup drag and drop functionality
-     
+
        function toggleTheme() {
         isDarkTheme = !isDarkTheme;
         document.documentElement.setAttribute('data-theme', isDarkTheme ? 'dark' : 'light');
         themeToggle.innerHTML = isDarkTheme ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+    }
+
+    // close the function to setup drag and drop functionality
+
+        function setupDragAndDrop() {
+        let draggedItem = null;
+
+        todoList.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('todo-item')) {
+                draggedItem = e.target;
+                setTimeout(() => {
+                    e.target.classList.add('dragging');
+                }, 0);
+            }
+        });
+
+        todoList.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('todo-item')) {
+                e.target.classList.remove('dragging');
+            }
+        });
+
+        todoList.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const afterElement = getDragAfterElement(e.clientY);
+            const currentItem = document.querySelector('.dragging');
+            
+            if (!currentItem || !afterElement) {
+                todoList.appendChild(currentItem);
+            } else {
+                todoList.insertBefore(currentItem, afterElement);
+            }
+        });
+
+        function getDragAfterElement(y) {
+            const draggableElements = [...document.querySelectorAll('.todo-item:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
     }
