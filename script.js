@@ -1,4 +1,4 @@
-// 📌 1. تنظیمات اولیه - وقتی صفحه کاملاً بارگذاری شد
+
 document.addEventListener('DOMContentLoaded', () => {
     
     const elements = {
