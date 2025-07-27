@@ -32,8 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = ""; render();
   };
 
+
+
   input.addEventListener("keypress", e => e.key === "Enter" && addBtn.click());
-  clearBtn.onclick = () => { todos = todos.filter(t => !t.done); render(); };
+
+  clearBtn.onclick = () => { todos = todos.filter(t => !t.done);
+    
+    render(); };
 
   filters.forEach(btn => {
     btn.onclick = () => {
@@ -43,5 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
     };
   });
+  
   render();
 });

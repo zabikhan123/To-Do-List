@@ -8,15 +8,6 @@
     --transition: all 0.3s ease;
 }
 
-[data-theme="dark"] {
-    --primary-color: #a29bfe;
-    --secondary-color: #6c5ce7;
-    --text-color: #f5f6fa;
-    --bg-color: #2d3436;
-    --card-color: #3d4548;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
 * {
     margin: 0;
     padding: 0;
