@@ -25,6 +25,15 @@ body {
     align-items: center;
     padding: 20px;
 }
+/* //  addd     // */
+body.dark {
+    --primary-color: #00cec9;
+    --secondary-color: #81ecec;
+    --text-color: #dfe6e9;
+    --bg-color: #2d3436;
+    --card-color: #3a3f47;
+}
+
 
 .app-container {
     width: 90%; 

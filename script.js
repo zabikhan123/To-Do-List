@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
         list = document.querySelector(".todo-list"),
         counter = document.getElementById("items-left"),
         clearBtn = document.getElementById("clear-completed"),
-        filters = document.querySelectorAll(".filter-btn");
+        filters = document.querySelectorAll(".filter-btn"),
+        themeToggle = document.querySelector(".theme-toggle");
 
   let todos = JSON.parse(localStorage.getItem("todos")) || [], filter = "all";
 
   const save = () => localStorage.setItem("todos", JSON.stringify(todos));
+
   const render = () => {
     list.innerHTML = "";
     todos.filter(t => filter === "all" || (filter === "active") !== t.done)
@@ -32,13 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
     input.value = ""; render();
   };
 
-
-
   input.addEventListener("keypress", e => e.key === "Enter" && addBtn.click());
 
-  clearBtn.onclick = () => { todos = todos.filter(t => !t.done);
-    
-    render(); };
+  clearBtn.onclick = () => {
+    todos = todos.filter(t => !t.done);
+    render();
+  };
 
   filters.forEach(btn => {
     btn.onclick = () => {
@@ -48,6 +49,21 @@ document.addEventListener("DOMContentLoaded", () => {
       render();
     };
   });
-  
+
+  // === THEME TOGGLE ===
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.innerHTML = `<i class="fas fa-sun"></i>`;
+  }
+
+  themeToggle.onclick = () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    themeToggle.innerHTML = isDark
+      ? `<i class="fas fa-sun"></i>`
+      : `<i class="fas fa-moon"></i>`;
+  };
+
   render();
 });
